@@ -12,7 +12,7 @@ RUN mkdir /app
 WORKDIR /app
 
 # Copy and install Python dependencies
-COPY birdnet/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
