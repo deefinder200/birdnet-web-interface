@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Identify Birds in iNaturalist Observations</title>
+</head>
+<body>
+	<h1>Identify Birds in iNaturalist Observations</h1>
+	<h3>Enter iNaturalist Observation URL</h3>
+
+	<form method="post" onsubmit="displayDetections(); return false;">
+		<input type="text" name="inaturalist_observation_url" id="inaturalist_observation_url" required style="width:25%; min-width: 300px" value="https://www.inaturalist.org/observations/333479462">
+		<br><br>
+
+		<input type="submit" value="Submit">
+	</form>
+
+	<div id="detections"></div>
+<script>
+// Display detections for observation
+async function displayDetections() {
+	document.getElementById("detections").innerHTML = "Loading... please wait.";
+	let detections = await fetchDetections();
+
+	if (!detections) {
+		alert("Unable to detect any birds");
+	}
+
+	var html = "";
+	for (var key in detections) {
+		let recording_num = key.split("_")[1];
+		html += `
+			<div>Detections in Recording ${recording_num}</div>
+
+			<ol>
+		`;
+
+		let recording_detections = detections[key];
+		var i = 1;
+		for (let detection of recording_detections) {
+			output = detection["common_name"];
+			output += " " + detection["start_time"] + "s - " + detection["end_time"] + "s";
+			output += " (confidence " + Math.round(detection["confidence"] * 1000) / 10 + "%)";
+
+			html += `
+				<li>${output}</li>
+			`;
+			i += 1;
+		}
+
+		html += "</ol>";
+	}
+
+	document.getElementById("detections").innerHTML = html;
+}
+
+// Fetch detections
+async function fetchDetections() {
+	const form_data = new FormData();
+	form_data.append('inaturalist_observation_url', document.getElementById("inaturalist_observation_url").value);
+
+	let response = await fetch('/detections', {
+		method: 'POST',
+		body: form_data
+	});
+
+	try {
+		let json = await response.json();
+		return json.detection_data;
+
+	} catch {
+		return null;
+	}
+}
+</script>
+</body>
+</html>

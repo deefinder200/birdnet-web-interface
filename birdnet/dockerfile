@@ -1,0 +1,25 @@
+# Birdnet: https://pypi.org/project/birdnet/#description
+## Doesn't support 3.14 as of 2025-12-12
+FROM python:3.11
+
+RUN apt-get update
+RUN apt install -y ffmpeg
+
+# Copy files over
+RUN mkdir /app
+
+# Set working directory
+WORKDIR /app
+
+# Copy and install Python dependencies
+COPY birdnet/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . /app
+
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
+
+# Set entry point
+CMD ["python", "app.py"]

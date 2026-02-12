@@ -1,0 +1,9 @@
+birdnet
+birdnetlib
+ffprobe
+Flask
+flask[async]
+librosa
+pydub
+requests
+resampy
