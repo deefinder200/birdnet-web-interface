@@ -50,7 +50,9 @@ async def getDetectionsFromObservationUrl(observation_url):
 
 	elif use_test_multiple_recordings:
 		# Example Marsh Tit with multiple recordings
-		observation_url = "https://www.inaturalist.org/observations/332146765"
+		#observation_url = "https://www.inaturalist.org/observations/332146765"
+		# Example Veery with multiple recordings
+		observation_url = "https://www.inaturalist.org/observations/366815593"
 
 	# Extract the part of the URL after the last backslash to get the Observation ID
 	last_slash_index = observation_url.rfind('/')
@@ -106,7 +108,7 @@ def extractSoundFilesFromObservation(observation_fields):
 		log("File extension: " + file_extension)
 
 		filepath = os.path.join(temp_dir, "temp" + str(i) + "." + file_extension)
-		output_filepath = os.path.join(temp_dir, "temp.wav")
+		output_filepath = os.path.join(temp_dir, "temp" + str(i) + ".wav")
 		with open(filepath, mode="wb") as file:
 			response = requests.get(sound_url)
 			file.write(response.content)
