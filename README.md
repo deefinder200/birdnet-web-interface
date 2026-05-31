@@ -15,6 +15,6 @@ Docker container for a web interface to run Birdnet on iNaturalist observations.
 
 # Files
 * app.py: App file that runs the Flask app
-* analzyer.py: File that runs the BirdNet analyzer
+* analyzer.py: File that runs the BirdNet analyzer
 * temp/*: Temporary folder where recordings will be stored. They will be deleted after running analyzer.
 * templates/: Where Flask templates are stored

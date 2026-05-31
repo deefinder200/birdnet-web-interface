@@ -35,6 +35,10 @@ async function displayDetections() {
 		`;
 
 		let recording_detections = detections[key];
+		if (recording_detections.length == 0) {
+			html += `<li>Unable to detect any birds</li>`;
+		}
+
 		var i = 1;
 		for (let detection of recording_detections) {
 			output = detection["common_name"];
